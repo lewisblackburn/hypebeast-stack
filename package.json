@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "@prisma/client": "~2.20.1",
-    "typegraphql-prisma": "^0.13.0"
+    "typegraphql-prisma": "^0.13.1",
+    "type-graphql": "1.1.1"
   },
   "scripts": {
     "clean": "npm run clean:node_modules",

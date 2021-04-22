@@ -1,19 +1,13 @@
 import { ClassType } from "type-graphql";
 import * as crudResolvers from "./resolvers/crud/resolvers-crud.index";
 import * as actionResolvers from "./resolvers/crud/resolvers-actions.index";
-import * as relationResolvers from "./resolvers/relations/resolvers.index";
 import * as models from "./models";
 import * as outputTypes from "./resolvers/outputs";
 import * as inputTypes from "./resolvers/inputs";
 import * as argsTypes from "./resolvers/crud/args.index";
 
 const crudResolversMap = {
-  User: crudResolvers.UserCrudResolver,
-  Post: crudResolvers.PostCrudResolver
-};
-const relationResolversMap = {
-  User: relationResolvers.UserRelationsResolver,
-  Post: relationResolvers.PostRelationsResolver
+  User: crudResolvers.UserCrudResolver
 };
 const actionResolversMap = {
   User: {
@@ -29,124 +23,54 @@ const actionResolversMap = {
     upsertUser: actionResolvers.UpsertUserResolver,
     aggregateUser: actionResolvers.AggregateUserResolver,
     groupByUser: actionResolvers.GroupByUserResolver
-  },
-  Post: {
-    post: actionResolvers.FindUniquePostResolver,
-    findFirstPost: actionResolvers.FindFirstPostResolver,
-    posts: actionResolvers.FindManyPostResolver,
-    createPost: actionResolvers.CreatePostResolver,
-    createManyPost: actionResolvers.CreateManyPostResolver,
-    deletePost: actionResolvers.DeletePostResolver,
-    updatePost: actionResolvers.UpdatePostResolver,
-    deleteManyPost: actionResolvers.DeleteManyPostResolver,
-    updateManyPost: actionResolvers.UpdateManyPostResolver,
-    upsertPost: actionResolvers.UpsertPostResolver,
-    aggregatePost: actionResolvers.AggregatePostResolver,
-    groupByPost: actionResolvers.GroupByPostResolver
   }
 };
 const resolversInfo = {
-  User: ["user", "findFirstUser", "users", "createUser", "createManyUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser", "groupByUser"],
-  Post: ["post", "findFirstPost", "posts", "createPost", "createManyPost", "deletePost", "updatePost", "deleteManyPost", "updateManyPost", "upsertPost", "aggregatePost", "groupByPost"]
-};
-const relationResolversInfo = {
-  User: ["posts"],
-  Post: ["author"]
+  User: ["user", "findFirstUser", "users", "createUser", "createManyUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser", "groupByUser"]
 };
 const modelsInfo = {
-  User: ["id", "createdAt", "email", "name", "role"],
-  Post: ["id", "createdAt", "updatedAt", "published", "title", "authorId"]
+  User: ["id", "email", "username", "displayname", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"]
 };
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "email", "name", "role", "posts"],
-  UserOrderByInput: ["id", "createdAt", "email", "name", "role"],
-  UserWhereUniqueInput: ["id", "email"],
-  UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "createdAt", "email", "name", "role"],
-  PostWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "updatedAt", "published", "title", "author", "authorId"],
-  PostOrderByInput: ["id", "createdAt", "updatedAt", "published", "title", "authorId"],
-  PostWhereUniqueInput: ["id"],
-  PostScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "createdAt", "updatedAt", "published", "title", "authorId"],
-  UserCreateInput: ["createdAt", "email", "name", "role", "posts"],
-  UserUpdateInput: ["createdAt", "email", "name", "role", "posts"],
-  UserCreateManyInput: ["id", "createdAt", "email", "name", "role"],
-  UserUpdateManyMutationInput: ["createdAt", "email", "name", "role"],
-  PostCreateInput: ["createdAt", "updatedAt", "published", "title", "author"],
-  PostUpdateInput: ["createdAt", "updatedAt", "published", "title", "author"],
-  PostCreateManyInput: ["id", "createdAt", "updatedAt", "published", "title", "authorId"],
-  PostUpdateManyMutationInput: ["createdAt", "updatedAt", "published", "title"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserOrderByInput: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserWhereUniqueInput: ["id", "email", "username"],
+  UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserCreateInput: ["email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserUpdateInput: ["email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserCreateManyInput: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserUpdateManyMutationInput: ["email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
-  StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   EnumRoleFilter: ["equals", "in", "notIn", "not"],
-  PostListRelationFilter: ["every", "some", "none"],
+  DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   IntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "avg", "sum", "min", "max"],
-  DateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"],
   StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "count", "min", "max"],
-  StringNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "count", "min", "max"],
   EnumRoleWithAggregatesFilter: ["equals", "in", "notIn", "not", "count", "min", "max"],
-  BoolFilter: ["equals", "not"],
-  UserRelationFilter: ["is", "isNot"],
-  IntNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  BoolWithAggregatesFilter: ["equals", "not", "count", "min", "max"],
-  IntNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "avg", "sum", "min", "max"],
-  PostCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "createMany", "connect"],
-  DateTimeFieldUpdateOperationsInput: ["set"],
+  DateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"],
   StringFieldUpdateOperationsInput: ["set"],
-  NullableStringFieldUpdateOperationsInput: ["set"],
   EnumRoleFieldUpdateOperationsInput: ["set"],
-  PostUpdateManyWithoutAuthorInput: ["create", "connectOrCreate", "upsert", "createMany", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
+  DateTimeFieldUpdateOperationsInput: ["set"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
-  UserCreateNestedOneWithoutPostsInput: ["create", "connectOrCreate", "connect"],
-  BoolFieldUpdateOperationsInput: ["set"],
-  UserUpdateOneWithoutPostsInput: ["create", "connectOrCreate", "upsert", "connect", "disconnect", "delete", "update"],
-  NullableIntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  NestedDateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   NestedEnumRoleFilter: ["equals", "in", "notIn", "not"],
+  NestedDateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedIntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "avg", "sum", "min", "max"],
   NestedFloatFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  NestedDateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"],
   NestedStringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "count", "min", "max"],
-  NestedStringNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "count", "min", "max"],
-  NestedIntNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedEnumRoleWithAggregatesFilter: ["equals", "in", "notIn", "not", "count", "min", "max"],
-  NestedBoolFilter: ["equals", "not"],
-  NestedBoolWithAggregatesFilter: ["equals", "not", "count", "min", "max"],
-  NestedIntNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "avg", "sum", "min", "max"],
-  NestedFloatNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  PostCreateWithoutAuthorInput: ["createdAt", "updatedAt", "published", "title"],
-  PostCreateOrConnectWithoutAuthorInput: ["where", "create"],
-  PostCreateManyAuthorInputEnvelope: ["data", "skipDuplicates"],
-  PostUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
-  PostUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
-  PostUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
-  PostScalarWhereInput: ["AND", "OR", "NOT", "id", "createdAt", "updatedAt", "published", "title", "authorId"],
-  UserCreateWithoutPostsInput: ["createdAt", "email", "name", "role"],
-  UserCreateOrConnectWithoutPostsInput: ["where", "create"],
-  UserUpsertWithoutPostsInput: ["update", "create"],
-  UserUpdateWithoutPostsInput: ["createdAt", "email", "name", "role"],
-  PostCreateManyAuthorInput: ["id", "createdAt", "updatedAt", "published", "title"],
-  PostUpdateWithoutAuthorInput: ["createdAt", "updatedAt", "published", "title"]
+  NestedDateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"]
 };
 const outputsInfo = {
   AggregateUser: ["count", "avg", "sum", "min", "max"],
-  UserGroupBy: ["id", "createdAt", "email", "name", "role", "count", "avg", "sum", "min", "max"],
-  AggregatePost: ["count", "avg", "sum", "min", "max"],
-  PostGroupBy: ["id", "createdAt", "updatedAt", "published", "title", "authorId", "count", "avg", "sum", "min", "max"],
+  UserGroupBy: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "count", "avg", "sum", "min", "max"],
   AffectedRowsOutput: ["count"],
-  UserCountAggregate: ["id", "createdAt", "email", "name", "role", "_all"],
+  UserCountAggregate: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "_all"],
   UserAvgAggregate: ["id"],
   UserSumAggregate: ["id"],
-  UserMinAggregate: ["id", "createdAt", "email", "name", "role"],
-  UserMaxAggregate: ["id", "createdAt", "email", "name", "role"],
-  PostCountAggregate: ["id", "createdAt", "updatedAt", "published", "title", "authorId", "_all"],
-  PostAvgAggregate: ["id", "authorId"],
-  PostSumAggregate: ["id", "authorId"],
-  PostMinAggregate: ["id", "createdAt", "updatedAt", "published", "title", "authorId"],
-  PostMaxAggregate: ["id", "createdAt", "updatedAt", "published", "title", "authorId"]
+  UserMinAggregate: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserMaxAggregate: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"]
 };
 const argsInfo = {
   FindUniqueUserArgs: ["where"],
@@ -160,19 +84,7 @@ const argsInfo = {
   UpdateManyUserArgs: ["data", "where"],
   UpsertUserArgs: ["where", "create", "update"],
   AggregateUserArgs: ["where", "orderBy", "cursor", "take", "skip"],
-  GroupByUserArgs: ["where", "orderBy", "by", "having", "take", "skip"],
-  FindUniquePostArgs: ["where"],
-  FindFirstPostArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
-  FindManyPostArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
-  CreatePostArgs: ["data"],
-  CreateManyPostArgs: ["data", "skipDuplicates"],
-  DeletePostArgs: ["where"],
-  UpdatePostArgs: ["data", "where"],
-  DeleteManyPostArgs: ["where"],
-  UpdateManyPostArgs: ["data", "where"],
-  UpsertPostArgs: ["where", "create", "update"],
-  AggregatePostArgs: ["where", "orderBy", "cursor", "take", "skip"],
-  GroupByPostArgs: ["where", "orderBy", "by", "having", "take", "skip"]
+  GroupByUserArgs: ["where", "orderBy", "by", "having", "take", "skip"]
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
@@ -238,57 +150,6 @@ export function applyResolversEnhanceMap(
           actionTarget,
           resolverActionName,
           Object.getOwnPropertyDescriptor(actionTarget, resolverActionName)!,
-        );
-      }
-    }
-  }
-}
-
-type RelationResolverModelNames = keyof typeof relationResolversMap;
-
-type RelationResolverActionNames<
-  TModel extends RelationResolverModelNames
-  > = keyof typeof relationResolversMap[TModel]["prototype"];
-
-export type RelationResolverActionsConfig<TModel extends RelationResolverModelNames>
-  = Partial<Record<RelationResolverActionNames<TModel> | "_all", MethodDecorator[]>>;
-
-export type RelationResolversEnhanceMap = {
-  [TModel in RelationResolverModelNames]?: RelationResolverActionsConfig<TModel>;
-};
-
-export function applyRelationResolversEnhanceMap(
-  relationResolversEnhanceMap: RelationResolversEnhanceMap,
-) {
-  for (const relationResolversEnhanceMapKey of Object.keys(relationResolversEnhanceMap)) {
-    const modelName = relationResolversEnhanceMapKey as keyof typeof relationResolversEnhanceMap;
-    const relationResolverTarget = relationResolversMap[modelName].prototype;
-    const relationResolverActionsConfig = relationResolversEnhanceMap[modelName]!;
-    if (relationResolverActionsConfig._all) {
-      const allActionsDecorators = relationResolverActionsConfig._all;
-      const relationResolverActionNames = relationResolversInfo[modelName as keyof typeof relationResolversInfo];
-      for (const relationResolverActionName of relationResolverActionNames) {
-        for (const allActionsDecorator of allActionsDecorators) {
-          allActionsDecorator(
-            relationResolverTarget,
-            relationResolverActionName,
-            Object.getOwnPropertyDescriptor(relationResolverTarget, relationResolverActionName)!,
-          );
-        }
-      }
-    }
-    const relationResolverActionsToApply = Object.keys(relationResolverActionsConfig).filter(
-      it => it !== "_all"
-    );
-    for (const relationResolverActionName of relationResolverActionsToApply) {
-      const decorators = relationResolverActionsConfig[
-        relationResolverActionName as keyof typeof relationResolverActionsConfig
-      ] as MethodDecorator[];
-      for (const decorator of decorators) {
-        decorator(
-          relationResolverTarget,
-          relationResolverActionName,
-          Object.getOwnPropertyDescriptor(relationResolverTarget, relationResolverActionName)!,
         );
       }
     }
@@ -484,7 +345,6 @@ export function applyArgsTypesEnhanceMap(
     );
   }
 }
-
 
 
 

@@ -13,26 +13,27 @@ generator typegraphql {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String?
-  role      Role     @default(USER)
-  posts     Post[]
-
-  @@map("users")
-}
-
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  published Boolean  @default(false)
-  title     String
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
-
-  @@map("posts")
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  username    String   @unique
+  displayname String
+  /// @TypeGraphQL.omit(output: true)
+  password    String
+  role        Role     @default(USER)
+  avatar      String   @default(value: "https://via.placeholder.com/400x400")
+  bio         String   @default(value: "")
+  location    String   @default(value: "")
+  website     String   @default(value: "")
+  dob         String   @default(value: "")
+  // tweets          Tweet[]   @relation(name: "TweetsByUser")
+  // comments        Comment[] @relation("CommentsByUser")
+  // likes           Like[]    @relation("LikesByUser")
+  // following       User[]    @relation(name: "FollowRelation")
+  // followingAmount Int       @default(0)
+  // followers       User[]    @relation(name: "FollowRelation")
+  // followerAmount  Int       @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum Role {

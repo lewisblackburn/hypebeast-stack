@@ -18,25 +18,65 @@ export class UserGroupBy {
   })
   id!: number;
 
-  @TypeGraphQL.Field(_type => Date, {
-    nullable: false
-  })
-  createdAt!: Date;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
   email!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true
+    nullable: false
   })
-  name?: string | null;
+  username!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  displayname!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  password!: string;
 
   @TypeGraphQL.Field(_type => Role, {
     nullable: false
   })
   role!: "USER" | "ADMIN";
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  avatar!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  bio!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  location!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  website!: string;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  dob!: string;
+
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: false
+  })
+  createdAt!: Date;
+
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: false
+  })
+  updatedAt!: Date;
 
   @TypeGraphQL.Field(_type => UserCountAggregate, {
     nullable: true

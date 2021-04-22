@@ -16,7 +16,7 @@ import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { COOKIE_NAME, __prod__ } from "./constants";
 import { prisma } from "./db";
-import { PostCrudResolver } from "./generated/type-graphql";
+import { UserCrudResolver } from "./generated/type-graphql";
 import { Context } from "./interfaces/context";
 import { authChecker } from "./middleware/authChecker";
 
@@ -56,7 +56,7 @@ const main = async () => {
   const redis = new Redis(process.env.REDIS_URL);
 
   const schema = await buildSchema({
-    resolvers: [PostCrudResolver],
+    resolvers: [UserCrudResolver],
     authChecker: authChecker,
   });
 

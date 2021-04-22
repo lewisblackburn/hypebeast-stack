@@ -13,11 +13,6 @@ export class UserMaxAggregate {
   })
   id!: number;
 
-  @TypeGraphQL.Field(_type => Date, {
-    nullable: true
-  })
-  createdAt!: Date | null;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
@@ -26,10 +21,55 @@ export class UserMaxAggregate {
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
-  name!: string | null;
+  username!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  displayname!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  password!: string | null;
 
   @TypeGraphQL.Field(_type => Role, {
     nullable: true
   })
   role!: "USER" | "ADMIN" | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  avatar!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  bio!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  location!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  website!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  dob!: string | null;
+
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: true
+  })
+  createdAt!: Date | null;
+
+  @TypeGraphQL.Field(_type => Date, {
+    nullable: true
+  })
+  updatedAt!: Date | null;
 }
