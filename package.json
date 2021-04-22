@@ -7,13 +7,13 @@
   "author": "Lewis Blackburn <lewisblackburn10@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "prisma": "^2.20.1",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "eslint": "^7.17.0",
     "eslint-plugin-react": "^7.22.0",
     "lerna": "^3.22.1",
     "prettier": "^2.2.1",
+    "prisma": "~2.20.1",
     "rimraf": "^3.0.2",
     "tslib": "^2.1.0"
   },
@@ -23,9 +23,12 @@
     ]
   },
   "dependencies": {
-    "@prisma/client": "^2.20.1"
+    "@prisma/client": "~2.20.1",
+    "typegraphql-prisma": "^0.13.0"
   },
   "scripts": {
+    "clean": "npm run clean:node_modules",
+    "clean:node_modules": "rimraf ./node_modules **/{dist,node_modules}/",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "watch": "lerna run watch --parallel",
