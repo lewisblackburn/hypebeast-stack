@@ -1,0 +1,12 @@
+.idea
+.vscode
+.env
+dist
+*.log
+node_modules
+.env.local
+.env.development
+.env.production
+.vercel
+out
+.next
