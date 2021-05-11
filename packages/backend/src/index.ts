@@ -10,56 +10,19 @@ import {
   simpleEstimator,
 } from "graphql-query-complexity";
 import { graphqlUploadExpress } from "graphql-upload";
-import Redis from "ioredis";
 import path from "path";
 import "reflect-metadata";
-import { buildSchema } from "type-graphql";
 import { COOKIE_NAME, __prod__ } from "./constants";
 import { prisma } from "./db";
-import { UserCrudResolver } from "./generated/type-graphql";
 import { Context } from "./interfaces/context";
-import { authChecker } from "./middleware/authChecker";
+import { redis } from "./redis";
+import { createSchema } from "./utils/createSchema";
 
 const main = async () => {
   const app = express();
   const PORT = parseInt(process.env.PORT || "4000");
 
-  prisma.$use(async (params, next) => {
-    const before = Date.now();
-    const result = await next(params);
-    const after = Date.now();
-    console.log(
-      `Query ${params.model}.${params.action} took ${after - before}ms`
-    );
-    return result;
-  });
-
-  prisma.$use((params, next) => {
-    const limit = 20;
-    const isNested = params.args.select;
-    const isFindMany = params.action === "findMany";
-    if (!isNested && !isFindMany) return next(params);
-
-    if (isNested) {
-      const key = Object.keys(params.args.select)[0];
-      if (params.args.select[key]?.take > limit)
-        params.args.select[key].take = limit;
-    }
-    if (isFindMany) {
-      if (params.args.take > limit) params.args.take = limit;
-    }
-
-    return next(params);
-  });
-
   const RedisStore = connectRedis(session);
-  const redis = new Redis(process.env.REDIS_URL);
-
-  const schema = await buildSchema({
-    resolvers: [UserCrudResolver],
-    authChecker: authChecker,
-  });
-
   app.set("trust proxy", 1);
   app.use(
     cors({
@@ -87,9 +50,10 @@ const main = async () => {
     })
   );
 
-  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }));
   app.use("/images", express.static(path.join(__dirname, "../images")));
 
+  const schema = await createSchema();
   const apolloServer = new ApolloServer({
     schema,
     context: ({ req, res }): Context => ({ prisma, req, res, redis }),
@@ -113,7 +77,6 @@ const main = async () => {
                 `Sorry, too complicated query! ${complexity} is over ${limit} that is the max allowed complexity.`
               );
             }
-            // console.log("Used query complexity points:", complexity);
           },
         }),
       },
@@ -130,6 +93,4 @@ const main = async () => {
   });
 };
 
-main().catch((err) => {
-  console.error(err);
-});
+main().catch(console.error);
