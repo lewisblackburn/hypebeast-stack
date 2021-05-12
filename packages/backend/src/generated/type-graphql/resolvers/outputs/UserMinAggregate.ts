@@ -13,6 +13,11 @@ export class UserMinAggregate {
   })
   id!: number;
 
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: true
+  })
+  confirmed!: boolean | null;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })

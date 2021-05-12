@@ -3,6 +3,8 @@ import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { User } from "../../generated/type-graphql";
 import { Context } from "../../interfaces/context";
 import { RegisterInput } from "./register/RegisterInput";
+import { createConfirmationLink } from "./utils/createConfirmationLink";
+import { sendEmail } from "./utils/sendEmail";
 
 @Resolver(User)
 export class RegisterResolver {
@@ -37,6 +39,8 @@ export class RegisterResolver {
         password: hashedPassword,
       },
     });
+
+    await sendEmail(user.email, await createConfirmationLink(user.id));
 
     if (user) {
       ctx.req.session.userId = user.id;

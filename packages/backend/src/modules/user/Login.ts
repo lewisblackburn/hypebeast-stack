@@ -16,9 +16,14 @@ export class LoginResolver {
         email: data.email,
       },
     });
-    if (!user) throw new Error("that user does not exist");
+
+    // might need to change how i deal with errors
+
+    if (!user) throw new Error("That user does not exist.");
+    if (!user.confirmed)
+      throw new Error("You need to confirm your account before logging in.");
     const valid = await argon2.verify(user!.password, data.password);
-    if (!valid) throw new Error("incorrect password");
+    if (!valid) throw new Error("Incorrect password");
 
     ctx.req.session.userId = user.id;
     ctx.req.session.role = user.role;

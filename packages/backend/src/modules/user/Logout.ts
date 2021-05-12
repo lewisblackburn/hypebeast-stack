@@ -4,7 +4,7 @@ import { User } from "../../generated/type-graphql";
 import { Context } from "../../interfaces/context";
 
 @Resolver(User)
-export class LogoutResovler {
+export class LogoutResolver {
   @Authorized(["USER", "ADMIN"])
   @Mutation(() => Boolean)
   async logout(@Ctx() ctx: Context): Promise<Boolean> {

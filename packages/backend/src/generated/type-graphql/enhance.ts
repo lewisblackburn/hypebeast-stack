@@ -1,6 +1,7 @@
 import { ClassType } from "type-graphql";
 import * as crudResolvers from "./resolvers/crud/resolvers-crud.index";
 import * as actionResolvers from "./resolvers/crud/resolvers-actions.index";
+import * as relationResolvers from "./resolvers/relations/resolvers.index";
 import * as models from "./models";
 import * as outputTypes from "./resolvers/outputs";
 import * as inputTypes from "./resolvers/inputs";
@@ -8,6 +9,9 @@ import * as argsTypes from "./resolvers/crud/args.index";
 
 const crudResolversMap = {
   User: crudResolvers.UserCrudResolver
+};
+const relationResolversMap = {
+  User: relationResolvers.UserRelationsResolver
 };
 const actionResolversMap = {
   User: {
@@ -28,49 +32,75 @@ const actionResolversMap = {
 const resolversInfo = {
   User: ["user", "findFirstUser", "users", "createUser", "createManyUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser", "groupByUser"]
 };
+const relationResolversInfo = {
+  User: ["following", "followers"]
+};
 const modelsInfo = {
-  User: ["id", "email", "username", "displayname", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"]
+  User: ["id", "confirmed", "email", "username", "displayname", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"]
 };
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
-  UserOrderByInput: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "following", "followers", "createdAt", "updatedAt"],
+  UserOrderByInput: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
   UserWhereUniqueInput: ["id", "email", "username"],
-  UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
-  UserCreateInput: ["email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
-  UserUpdateInput: ["email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
-  UserCreateManyInput: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
-  UserUpdateManyMutationInput: ["email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserCreateInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following", "followers"],
+  UserUpdateInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following", "followers"],
+  UserCreateManyInput: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserUpdateManyMutationInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
+  BoolFilter: ["equals", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   EnumRoleFilter: ["equals", "in", "notIn", "not"],
+  UserListRelationFilter: ["every", "some", "none"],
   DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   IntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "avg", "sum", "min", "max"],
+  BoolWithAggregatesFilter: ["equals", "not", "count", "min", "max"],
   StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "count", "min", "max"],
   EnumRoleWithAggregatesFilter: ["equals", "in", "notIn", "not", "count", "min", "max"],
   DateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"],
+  UserCreateNestedManyWithoutFollowersInput: ["create", "connectOrCreate", "connect"],
+  UserCreateNestedManyWithoutFollowingInput: ["create", "connectOrCreate", "connect"],
+  BoolFieldUpdateOperationsInput: ["set"],
   StringFieldUpdateOperationsInput: ["set"],
   EnumRoleFieldUpdateOperationsInput: ["set"],
   DateTimeFieldUpdateOperationsInput: ["set"],
+  UserUpdateManyWithoutFollowersInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
+  UserUpdateManyWithoutFollowingInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
+  NestedBoolFilter: ["equals", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   NestedEnumRoleFilter: ["equals", "in", "notIn", "not"],
   NestedDateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedIntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "avg", "sum", "min", "max"],
   NestedFloatFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
+  NestedBoolWithAggregatesFilter: ["equals", "not", "count", "min", "max"],
   NestedStringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "count", "min", "max"],
   NestedEnumRoleWithAggregatesFilter: ["equals", "in", "notIn", "not", "count", "min", "max"],
-  NestedDateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"]
+  NestedDateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"],
+  UserCreateWithoutFollowersInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following"],
+  UserCreateOrConnectWithoutFollowersInput: ["where", "create"],
+  UserCreateWithoutFollowingInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "followers"],
+  UserCreateOrConnectWithoutFollowingInput: ["where", "create"],
+  UserUpsertWithWhereUniqueWithoutFollowersInput: ["where", "update", "create"],
+  UserUpdateWithWhereUniqueWithoutFollowersInput: ["where", "data"],
+  UserUpdateManyWithWhereWithoutFollowersInput: ["where", "data"],
+  UserScalarWhereInput: ["AND", "OR", "NOT", "id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserUpsertWithWhereUniqueWithoutFollowingInput: ["where", "update", "create"],
+  UserUpdateWithWhereUniqueWithoutFollowingInput: ["where", "data"],
+  UserUpdateManyWithWhereWithoutFollowingInput: ["where", "data"],
+  UserUpdateWithoutFollowersInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following"],
+  UserUpdateWithoutFollowingInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "followers"]
 };
 const outputsInfo = {
   AggregateUser: ["count", "avg", "sum", "min", "max"],
-  UserGroupBy: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "count", "avg", "sum", "min", "max"],
+  UserGroupBy: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "count", "avg", "sum", "min", "max"],
   AffectedRowsOutput: ["count"],
-  UserCountAggregate: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "_all"],
+  UserCountAggregate: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "_all"],
   UserAvgAggregate: ["id"],
   UserSumAggregate: ["id"],
-  UserMinAggregate: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
-  UserMaxAggregate: ["id", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"]
+  UserMinAggregate: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  UserMaxAggregate: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"]
 };
 const argsInfo = {
   FindUniqueUserArgs: ["where"],
@@ -150,6 +180,57 @@ export function applyResolversEnhanceMap(
           actionTarget,
           resolverActionName,
           Object.getOwnPropertyDescriptor(actionTarget, resolverActionName)!,
+        );
+      }
+    }
+  }
+}
+
+type RelationResolverModelNames = keyof typeof relationResolversMap;
+
+type RelationResolverActionNames<
+  TModel extends RelationResolverModelNames
+  > = keyof typeof relationResolversMap[TModel]["prototype"];
+
+export type RelationResolverActionsConfig<TModel extends RelationResolverModelNames>
+  = Partial<Record<RelationResolverActionNames<TModel> | "_all", MethodDecorator[]>>;
+
+export type RelationResolversEnhanceMap = {
+  [TModel in RelationResolverModelNames]?: RelationResolverActionsConfig<TModel>;
+};
+
+export function applyRelationResolversEnhanceMap(
+  relationResolversEnhanceMap: RelationResolversEnhanceMap,
+) {
+  for (const relationResolversEnhanceMapKey of Object.keys(relationResolversEnhanceMap)) {
+    const modelName = relationResolversEnhanceMapKey as keyof typeof relationResolversEnhanceMap;
+    const relationResolverTarget = relationResolversMap[modelName].prototype;
+    const relationResolverActionsConfig = relationResolversEnhanceMap[modelName]!;
+    if (relationResolverActionsConfig._all) {
+      const allActionsDecorators = relationResolverActionsConfig._all;
+      const relationResolverActionNames = relationResolversInfo[modelName as keyof typeof relationResolversInfo];
+      for (const relationResolverActionName of relationResolverActionNames) {
+        for (const allActionsDecorator of allActionsDecorators) {
+          allActionsDecorator(
+            relationResolverTarget,
+            relationResolverActionName,
+            Object.getOwnPropertyDescriptor(relationResolverTarget, relationResolverActionName)!,
+          );
+        }
+      }
+    }
+    const relationResolverActionsToApply = Object.keys(relationResolverActionsConfig).filter(
+      it => it !== "_all"
+    );
+    for (const relationResolverActionName of relationResolverActionsToApply) {
+      const decorators = relationResolverActionsConfig[
+        relationResolverActionName as keyof typeof relationResolverActionsConfig
+      ] as MethodDecorator[];
+      for (const decorator of decorators) {
+        decorator(
+          relationResolverTarget,
+          relationResolverActionName,
+          Object.getOwnPropertyDescriptor(relationResolverTarget, relationResolverActionName)!,
         );
       }
     }
@@ -345,6 +426,7 @@ export function applyArgsTypesEnhanceMap(
     );
   }
 }
+
 
 
 

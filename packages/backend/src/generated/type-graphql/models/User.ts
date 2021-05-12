@@ -13,6 +13,11 @@ export class User {
   })
   id!: number;
 
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: false
+  })
+  confirmed!: boolean;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
@@ -59,6 +64,10 @@ export class User {
     nullable: false
   })
   dob!: string;
+
+  following?: User[];
+
+  followers?: User[];
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: false

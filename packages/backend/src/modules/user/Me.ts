@@ -3,7 +3,7 @@ import { User } from "../../generated/type-graphql";
 import { Context } from "../../interfaces/context";
 
 @Resolver(User)
-export class MeResover {
+export class MeResolver {
   @Query(() => User, { nullable: true })
   async me(@Ctx() ctx: Context): Promise<User | null> {
     if (!ctx.req.session.userId) return null;

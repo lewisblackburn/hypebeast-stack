@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 
 export enum UserScalarFieldEnum {
   id = "id",
+  confirmed = "confirmed",
   email = "email",
   username = "username",
   displayname = "displayname",

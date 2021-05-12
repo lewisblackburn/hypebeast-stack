@@ -18,6 +18,11 @@ export class UserGroupBy {
   })
   id!: number;
 
+  @TypeGraphQL.Field(_type => Boolean, {
+    nullable: false
+  })
+  confirmed!: boolean;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
