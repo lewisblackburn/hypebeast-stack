@@ -1,5 +1,5 @@
-import { COOKIE_NAME } from "backend/src/constants";
 import { Authorized, Ctx, Mutation, Resolver } from "type-graphql";
+import { COOKIE_NAME } from "../../constants";
 import { User } from "../../generated/type-graphql";
 import { Context } from "../../interfaces/context";
 
@@ -7,7 +7,7 @@ import { Context } from "../../interfaces/context";
 export class LogoutResolver {
   @Authorized(["USER", "ADMIN"])
   @Mutation(() => Boolean)
-  async logout(@Ctx() ctx: Context): Promise<Boolean> {
+  async logout(@Ctx() ctx: Context): Promise<boolean> {
     return new Promise((resolve) =>
       ctx.req.session.destroy((err: any) => {
         ctx.res.clearCookie(COOKIE_NAME);

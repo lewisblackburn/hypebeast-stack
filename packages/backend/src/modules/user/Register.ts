@@ -42,10 +42,8 @@ export class RegisterResolver {
 
     await sendEmail(user.email, await createConfirmationLink(user.id));
 
-    if (user) {
-      ctx.req.session.userId = user.id;
-      ctx.req.session.role = user.role;
-    }
+    ctx.req.session.userId = user.id;
+    ctx.req.session.role = user.role;
 
     return user;
   }

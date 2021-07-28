@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { PostCreateNestedManyWithoutUserInput } from "../inputs/PostCreateNestedManyWithoutUserInput";
 import { UserCreateNestedManyWithoutFollowersInput } from "../inputs/UserCreateNestedManyWithoutFollowersInput";
 import { Role } from "../../enums/Role";
 
@@ -73,6 +74,11 @@ export class UserCreateWithoutFollowersInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
+
+  @TypeGraphQL.Field(_type => PostCreateNestedManyWithoutUserInput, {
+    nullable: true
+  })
+  posts?: PostCreateNestedManyWithoutUserInput | undefined;
 
   @TypeGraphQL.Field(_type => UserCreateNestedManyWithoutFollowersInput, {
     nullable: true

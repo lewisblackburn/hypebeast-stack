@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 export async function sendEmail(email: string, token: string) {
   const testAccount = await nodemailer.createTestAccount();
 
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
     secure: false, // true for 465, false for other ports

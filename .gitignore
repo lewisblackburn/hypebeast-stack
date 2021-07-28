@@ -10,3 +10,7 @@ node_modules
 .vercel
 out
 .next
+.DS_Store
+.docker
+storybook-static
+_

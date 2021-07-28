@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
+import { Post } from "../models/Post";
 import { Role } from "../enums/Role";
 
 @TypeGraphQL.ObjectType({
@@ -64,6 +65,8 @@ export class User {
     nullable: false
   })
   dob!: string;
+
+  posts?: Post[];
 
   following?: User[];
 

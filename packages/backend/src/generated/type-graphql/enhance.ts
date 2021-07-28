@@ -8,10 +8,12 @@ import * as inputTypes from "./resolvers/inputs";
 import * as argsTypes from "./resolvers/crud/args.index";
 
 const crudResolversMap = {
-  User: crudResolvers.UserCrudResolver
+  User: crudResolvers.UserCrudResolver,
+  Post: crudResolvers.PostCrudResolver
 };
 const relationResolversMap = {
-  User: relationResolvers.UserRelationsResolver
+  User: relationResolvers.UserRelationsResolver,
+  Post: relationResolvers.PostRelationsResolver
 };
 const actionResolversMap = {
   User: {
@@ -27,30 +29,56 @@ const actionResolversMap = {
     upsertUser: actionResolvers.UpsertUserResolver,
     aggregateUser: actionResolvers.AggregateUserResolver,
     groupByUser: actionResolvers.GroupByUserResolver
+  },
+  Post: {
+    post: actionResolvers.FindUniquePostResolver,
+    findFirstPost: actionResolvers.FindFirstPostResolver,
+    posts: actionResolvers.FindManyPostResolver,
+    createPost: actionResolvers.CreatePostResolver,
+    createManyPost: actionResolvers.CreateManyPostResolver,
+    deletePost: actionResolvers.DeletePostResolver,
+    updatePost: actionResolvers.UpdatePostResolver,
+    deleteManyPost: actionResolvers.DeleteManyPostResolver,
+    updateManyPost: actionResolvers.UpdateManyPostResolver,
+    upsertPost: actionResolvers.UpsertPostResolver,
+    aggregatePost: actionResolvers.AggregatePostResolver,
+    groupByPost: actionResolvers.GroupByPostResolver
   }
 };
 const resolversInfo = {
-  User: ["user", "findFirstUser", "users", "createUser", "createManyUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser", "groupByUser"]
+  User: ["user", "findFirstUser", "users", "createUser", "createManyUser", "deleteUser", "updateUser", "deleteManyUser", "updateManyUser", "upsertUser", "aggregateUser", "groupByUser"],
+  Post: ["post", "findFirstPost", "posts", "createPost", "createManyPost", "deletePost", "updatePost", "deleteManyPost", "updateManyPost", "upsertPost", "aggregatePost", "groupByPost"]
 };
 const relationResolversInfo = {
-  User: ["following", "followers"]
+  User: ["posts", "following", "followers"],
+  Post: ["user"]
 };
 const modelsInfo = {
-  User: ["id", "confirmed", "email", "username", "displayname", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"]
+  User: ["id", "confirmed", "email", "username", "displayname", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  Post: ["id", "userId", "createdAt", "updatedAt"]
 };
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "following", "followers", "createdAt", "updatedAt"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "posts", "following", "followers", "createdAt", "updatedAt"],
   UserOrderByInput: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
   UserWhereUniqueInput: ["id", "email", "username"],
   UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
-  UserCreateInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following", "followers"],
-  UserUpdateInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following", "followers"],
+  PostWhereInput: ["AND", "OR", "NOT", "id", "user", "userId", "createdAt", "updatedAt"],
+  PostOrderByInput: ["id", "userId", "createdAt", "updatedAt"],
+  PostWhereUniqueInput: ["id"],
+  PostScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "userId", "createdAt", "updatedAt"],
+  UserCreateInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "posts", "following", "followers"],
+  UserUpdateInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "posts", "following", "followers"],
   UserCreateManyInput: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
   UserUpdateManyMutationInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  PostCreateInput: ["createdAt", "updatedAt", "user"],
+  PostUpdateInput: ["createdAt", "updatedAt", "user"],
+  PostCreateManyInput: ["id", "userId", "createdAt", "updatedAt"],
+  PostUpdateManyMutationInput: ["createdAt", "updatedAt"],
   IntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   BoolFilter: ["equals", "not"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not"],
   EnumRoleFilter: ["equals", "in", "notIn", "not"],
+  PostListRelationFilter: ["every", "some", "none"],
   UserListRelationFilter: ["every", "some", "none"],
   DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   IntWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "avg", "sum", "min", "max"],
@@ -58,15 +86,20 @@ const inputsInfo = {
   StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "mode", "not", "count", "min", "max"],
   EnumRoleWithAggregatesFilter: ["equals", "in", "notIn", "not", "count", "min", "max"],
   DateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"],
+  UserRelationFilter: ["is", "isNot"],
+  PostCreateNestedManyWithoutUserInput: ["create", "connectOrCreate", "createMany", "connect"],
   UserCreateNestedManyWithoutFollowersInput: ["create", "connectOrCreate", "connect"],
   UserCreateNestedManyWithoutFollowingInput: ["create", "connectOrCreate", "connect"],
   BoolFieldUpdateOperationsInput: ["set"],
   StringFieldUpdateOperationsInput: ["set"],
   EnumRoleFieldUpdateOperationsInput: ["set"],
   DateTimeFieldUpdateOperationsInput: ["set"],
+  PostUpdateManyWithoutUserInput: ["create", "connectOrCreate", "upsert", "createMany", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
   UserUpdateManyWithoutFollowersInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
   UserUpdateManyWithoutFollowingInput: ["create", "connectOrCreate", "upsert", "connect", "set", "disconnect", "delete", "update", "updateMany", "deleteMany"],
   IntFieldUpdateOperationsInput: ["set", "increment", "decrement", "multiply", "divide"],
+  UserCreateNestedOneWithoutPostsInput: ["create", "connectOrCreate", "connect"],
+  UserUpdateOneRequiredWithoutPostsInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   NestedBoolFilter: ["equals", "not"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
@@ -78,10 +111,17 @@ const inputsInfo = {
   NestedStringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "count", "min", "max"],
   NestedEnumRoleWithAggregatesFilter: ["equals", "in", "notIn", "not", "count", "min", "max"],
   NestedDateTimeWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not", "count", "min", "max"],
-  UserCreateWithoutFollowersInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following"],
+  PostCreateWithoutUserInput: ["createdAt", "updatedAt"],
+  PostCreateOrConnectWithoutUserInput: ["where", "create"],
+  PostCreateManyUserInputEnvelope: ["data", "skipDuplicates"],
+  UserCreateWithoutFollowersInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "posts", "following"],
   UserCreateOrConnectWithoutFollowersInput: ["where", "create"],
-  UserCreateWithoutFollowingInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "followers"],
+  UserCreateWithoutFollowingInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "posts", "followers"],
   UserCreateOrConnectWithoutFollowingInput: ["where", "create"],
+  PostUpsertWithWhereUniqueWithoutUserInput: ["where", "update", "create"],
+  PostUpdateWithWhereUniqueWithoutUserInput: ["where", "data"],
+  PostUpdateManyWithWhereWithoutUserInput: ["where", "data"],
+  PostScalarWhereInput: ["AND", "OR", "NOT", "id", "userId", "createdAt", "updatedAt"],
   UserUpsertWithWhereUniqueWithoutFollowersInput: ["where", "update", "create"],
   UserUpdateWithWhereUniqueWithoutFollowersInput: ["where", "data"],
   UserUpdateManyWithWhereWithoutFollowersInput: ["where", "data"],
@@ -89,18 +129,31 @@ const inputsInfo = {
   UserUpsertWithWhereUniqueWithoutFollowingInput: ["where", "update", "create"],
   UserUpdateWithWhereUniqueWithoutFollowingInput: ["where", "data"],
   UserUpdateManyWithWhereWithoutFollowingInput: ["where", "data"],
-  UserUpdateWithoutFollowersInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following"],
-  UserUpdateWithoutFollowingInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "followers"]
+  UserCreateWithoutPostsInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following", "followers"],
+  UserCreateOrConnectWithoutPostsInput: ["where", "create"],
+  UserUpsertWithoutPostsInput: ["update", "create"],
+  UserUpdateWithoutPostsInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "following", "followers"],
+  PostCreateManyUserInput: ["id", "createdAt", "updatedAt"],
+  PostUpdateWithoutUserInput: ["createdAt", "updatedAt"],
+  UserUpdateWithoutFollowersInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "posts", "following"],
+  UserUpdateWithoutFollowingInput: ["confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "posts", "followers"]
 };
 const outputsInfo = {
   AggregateUser: ["count", "avg", "sum", "min", "max"],
   UserGroupBy: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "count", "avg", "sum", "min", "max"],
+  AggregatePost: ["count", "avg", "sum", "min", "max"],
+  PostGroupBy: ["id", "userId", "createdAt", "updatedAt", "count", "avg", "sum", "min", "max"],
   AffectedRowsOutput: ["count"],
   UserCountAggregate: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt", "_all"],
   UserAvgAggregate: ["id"],
   UserSumAggregate: ["id"],
   UserMinAggregate: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
-  UserMaxAggregate: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"]
+  UserMaxAggregate: ["id", "confirmed", "email", "username", "displayname", "password", "role", "avatar", "bio", "location", "website", "dob", "createdAt", "updatedAt"],
+  PostCountAggregate: ["id", "userId", "createdAt", "updatedAt", "_all"],
+  PostAvgAggregate: ["id", "userId"],
+  PostSumAggregate: ["id", "userId"],
+  PostMinAggregate: ["id", "userId", "createdAt", "updatedAt"],
+  PostMaxAggregate: ["id", "userId", "createdAt", "updatedAt"]
 };
 const argsInfo = {
   FindUniqueUserArgs: ["where"],
@@ -114,7 +167,19 @@ const argsInfo = {
   UpdateManyUserArgs: ["data", "where"],
   UpsertUserArgs: ["where", "create", "update"],
   AggregateUserArgs: ["where", "orderBy", "cursor", "take", "skip"],
-  GroupByUserArgs: ["where", "orderBy", "by", "having", "take", "skip"]
+  GroupByUserArgs: ["where", "orderBy", "by", "having", "take", "skip"],
+  FindUniquePostArgs: ["where"],
+  FindFirstPostArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindManyPostArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  CreatePostArgs: ["data"],
+  CreateManyPostArgs: ["data", "skipDuplicates"],
+  DeletePostArgs: ["where"],
+  UpdatePostArgs: ["data", "where"],
+  DeleteManyPostArgs: ["where"],
+  UpdateManyPostArgs: ["data", "where"],
+  UpsertPostArgs: ["where", "create", "update"],
+  AggregatePostArgs: ["where", "orderBy", "cursor", "take", "skip"],
+  GroupByPostArgs: ["where", "orderBy", "by", "having", "take", "skip"]
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
