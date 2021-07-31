@@ -1,17 +1,16 @@
 import React from "react";
+import { LoginForm } from "../../components/Form/LoginForm";
 import { useCurrentState } from "../../stores/useCurrentState";
-import { useVerifyLoggedIn } from "../auth/useVerifyLoggedIn";
+import { Layout } from "../layouts/Layout";
 
 interface LandingPageProps {}
 
 export const LandingPage: React.FC<LandingPageProps> = ({}) => {
-  useVerifyLoggedIn();
   const { state, setCurrentState } = useCurrentState();
 
   return (
-    <div>
-      <button onClick={() => setCurrentState(state + 1)}>count</button>
-      {state}
-    </div>
+    <Layout>
+      <LoginForm />
+    </Layout>
   );
 };
