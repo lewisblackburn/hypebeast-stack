@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { MeDocument, MeQuery, useLoginMutation } from "../../generated/graphql";
 import { toErrorMap } from "../../lib/toErrorMap";
+import { Button } from "../Button";
 import InputField from "./InputField";
 
 interface LoginFormProps {}
@@ -39,7 +40,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
                 me: data?.login,
               },
             });
-            cache.evict({ fieldName: "tweets:{}" });
+            cache.evict({ fieldName: "posts:{}" });
           },
         })
           .then(() => {
@@ -53,7 +54,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
             // if graphql error
             if (e.graphQLErrors[0].extensions.exception.validationErrors)
               setErrors(toErrorMap(e));
-            // other error
+            // other error, password: as it is last input box
             else setErrors({ password: e.message });
           });
         setSubmitting(false);
@@ -68,6 +69,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
             errors={errors.email}
             type="email"
           />
+          <InputField
+            name="password"
+            placeholder="password"
+            touched={touched.password}
+            errors={errors.password}
+            type="password"
+          />
+          <Button type="submit" loading={isSubmitting}>
+            Login
+          </Button>
         </Form>
       )}
     </Formik>
