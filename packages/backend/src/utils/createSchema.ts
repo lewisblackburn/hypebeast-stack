@@ -1,5 +1,6 @@
 import { buildSchema } from "type-graphql";
 import { UserRelationsResolver } from "../generated/type-graphql";
+import { FileUploadResolver } from "../modules/file/FileUploadResolver";
 import { authChecker } from "../modules/middleware/authChecker";
 import { PostResolver } from "../modules/post/Post";
 import { ChangePasswordResolver } from "../modules/user/ChangePassword";
@@ -24,6 +25,7 @@ export const createSchema = async () =>
       MeResolver,
       UserRelationsResolver,
       PostResolver,
+      FileUploadResolver,
     ],
     authChecker: authChecker,
   });

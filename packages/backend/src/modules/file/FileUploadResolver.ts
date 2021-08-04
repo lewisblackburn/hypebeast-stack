@@ -4,14 +4,15 @@ import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { Context } from "../../interfaces/context";
 
 @Resolver()
-export class ImageUploadResolver {
+export class FileUploadResolver {
   @Mutation(() => Boolean)
   async upload(
     @Ctx() ctx: Context,
-    @Arg("image", () => GraphQLUpload) image: FileUpload
+    @Arg("file", () => GraphQLUpload) file: FileUpload
   ): Promise<boolean> {
-    const { createReadStream, filename } = image;
-    const filepath = `${__dirname}/../../images/`;
+    console.log(ctx.req.session.userId);
+    const { createReadStream, filename } = file;
+    const filepath = `${__dirname}/../../../images/`;
     try {
       fs.mkdirSync(filepath + ctx.req.session.userId);
     } catch (error) {}
