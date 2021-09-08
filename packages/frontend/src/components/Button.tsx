@@ -1,9 +1,9 @@
 import React, {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
-  ReactNode,
+  ReactNode
 } from "react";
-import { Spinner } from "./Spinner";
+import {Spinner} from "./Spinner";
 
 export type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,

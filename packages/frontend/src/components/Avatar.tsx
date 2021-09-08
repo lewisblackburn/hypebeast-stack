@@ -1,7 +1,9 @@
 import React from "react";
 
-interface AvatarProps {}
+interface AvatarProps {
+  url: string
+}
 
-export const Avatar: React.FC<AvatarProps> = ({}) => {
-  return <div></div>;
+export const Avatar: React.FC<AvatarProps> = ({url}) => {
+  return <div>{url}</div>;
 };

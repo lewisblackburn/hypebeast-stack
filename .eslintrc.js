@@ -30,5 +30,9 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/ban-types": "off",
+    // temp rules
+    "@typescript-eslint/no-empty-interface": "off",
+    "react/prop-types": "off",
+    "no-empty-pattern": "off",
   },
 };
