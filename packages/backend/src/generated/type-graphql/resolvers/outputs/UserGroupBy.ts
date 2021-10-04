@@ -86,25 +86,25 @@ export class UserGroupBy {
   @TypeGraphQL.Field(_type => UserCountAggregate, {
     nullable: true
   })
-  count?: UserCountAggregate | null;
+  _count!: UserCountAggregate | null;
 
   @TypeGraphQL.Field(_type => UserAvgAggregate, {
     nullable: true
   })
-  avg?: UserAvgAggregate | null;
+  _avg!: UserAvgAggregate | null;
 
   @TypeGraphQL.Field(_type => UserSumAggregate, {
     nullable: true
   })
-  sum?: UserSumAggregate | null;
+  _sum!: UserSumAggregate | null;
 
   @TypeGraphQL.Field(_type => UserMinAggregate, {
     nullable: true
   })
-  min?: UserMinAggregate | null;
+  _min!: UserMinAggregate | null;
 
   @TypeGraphQL.Field(_type => UserMaxAggregate, {
     nullable: true
   })
-  max?: UserMaxAggregate | null;
+  _max!: UserMaxAggregate | null;
 }

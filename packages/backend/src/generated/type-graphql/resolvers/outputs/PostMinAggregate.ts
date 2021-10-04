@@ -8,14 +8,14 @@ import { DecimalJSScalar } from "../../scalars";
 })
 export class PostMinAggregate {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
+    nullable: true
   })
-  id!: number;
+  id!: number | null;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
+    nullable: true
   })
-  userId!: number;
+  userId!: number | null;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: true

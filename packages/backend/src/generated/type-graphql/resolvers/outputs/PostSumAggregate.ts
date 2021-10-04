@@ -8,12 +8,12 @@ import { DecimalJSScalar } from "../../scalars";
 })
 export class PostSumAggregate {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
+    nullable: true
   })
-  id!: number;
+  id!: number | null;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
+    nullable: true
   })
-  userId!: number;
+  userId!: number | null;
 }

@@ -13,69 +13,69 @@ export class UserCountAggregate {
   id!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  confirmed!: number | null;
+  confirmed!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  email!: number | null;
+  email!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  username!: number | null;
+  username!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  displayname!: number | null;
+  displayname!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  password!: number | null;
+  password!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  role!: number | null;
+  role!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  avatar!: number | null;
+  avatar!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  bio!: number | null;
+  bio!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  location!: number | null;
+  location!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  website!: number | null;
+  website!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  dob!: number | null;
+  dob!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  createdAt!: number | null;
+  createdAt!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  updatedAt!: number | null;
+  updatedAt!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false

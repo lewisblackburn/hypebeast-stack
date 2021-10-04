@@ -9,9 +9,9 @@ import { Role } from "../../enums/Role";
 })
 export class UserMaxAggregate {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
+    nullable: true
   })
-  id!: number;
+  id!: number | null;
 
   @TypeGraphQL.Field(_type => Boolean, {
     nullable: true

@@ -18,14 +18,14 @@ export class PostCountAggregate {
   userId!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  createdAt!: number | null;
+  createdAt!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: false
   })
-  updatedAt!: number | null;
+  updatedAt!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
