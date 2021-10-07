@@ -9,5 +9,3 @@ jobs:
         run: yarn
       - name: Run ESLint
         run: yarn lint
-      - name: Build modules
-        run: yarn build
