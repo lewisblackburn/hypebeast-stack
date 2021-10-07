@@ -1,4 +1,7 @@
 fragment RegularUser on User {
   id
+  email
   username
+  displayname
+  avatar
 }

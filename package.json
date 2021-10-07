@@ -10,13 +10,13 @@
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "eslint": "^7.17.0",
-    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react": "7.26.1",
     "lerna": "^3.22.1",
     "prettier": "^2.2.1",
+    "prisma": "~2.29.0",
     "rimraf": "^3.0.2",
     "tslib": "^2.1.0",
-    "prisma": "~2.26.0",
-    "typegraphql-prisma": "0.14.5"
+    "typegraphql-prisma": "^0.14.5"
   },
   "workspaces": {
     "packages": [
@@ -24,7 +24,8 @@
     ]
   },
   "dependencies": {
-    "@prisma/client": "~2.26.0",
+    "@prisma/client": "~2.29.0",
+    "node": "16.10.0",
     "type-graphql": "^1.1.1"
   },
   "scripts": {

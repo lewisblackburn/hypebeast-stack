@@ -377,7 +377,7 @@ export type UserWhereUniqueInput = {
 
 export type RegularUserFragment = (
   { __typename?: 'User' }
-  & Pick<User, 'id' | 'username'>
+  & Pick<User, 'id' | 'email' | 'username' | 'displayname' | 'avatar'>
 );
 
 export type ConfirmMutationVariables = Exact<{
@@ -441,14 +441,17 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'username' | 'displayname' | 'avatar'>
+    & RegularUserFragment
   )> }
 );
 
 export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
   id
+  email
   username
+  displayname
+  avatar
 }
     `;
 export const ConfirmDocument = gql`
@@ -612,14 +615,10 @@ export type UploadMutationOptions = Apollo.BaseMutationOptions<UploadMutation, U
 export const MeDocument = gql`
     query Me {
   me {
-    id
-    email
-    username
-    displayname
-    avatar
+    ...RegularUser
   }
 }
-    `;
+    ${RegularUserFragmentDoc}`;
 
 /**
  * __useMeQuery__
