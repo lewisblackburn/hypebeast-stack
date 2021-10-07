@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import React from "react";
 import {Avatar} from "../../components/Avatar";
 import {
+  UploadType,
   useLogoutMutation,
   useMeQuery,
   useUploadMutation
@@ -11,19 +12,24 @@ import {useVerifyLoggedIn} from "../auth/useVerifyLoggedIn";
 import {Layout} from "../layouts/Layout";
 
 interface LandingPageProps {}
+interface AvatarUploadProps {
+  refetch: any;
+}
 
-const AvatarUpload: React.FC = ({ refetch }: any) => {
+const AvatarUpload: React.FC<AvatarUploadProps> = ({ refetch }) => {
   const [upload] = useUploadMutation();
 
   const hiddenFileInput = React.useRef(null);
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     hiddenFileInput.current.click();
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const fileUploaded = event.target.files[0];
-    upload({ variables: { file: fileUploaded } }).then(() => refetch());
+    upload({
+      variables: { file: fileUploaded, type: UploadType.Avatar },
+    }).then(() => refetch());
   };
 
   return (

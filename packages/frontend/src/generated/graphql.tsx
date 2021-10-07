@@ -77,6 +77,7 @@ export type Mutation = {
 
 
 export type MutationUploadArgs = {
+  type: UploadType;
   file: Scalars['Upload'];
 };
 
@@ -250,6 +251,14 @@ export type StringFilter = {
   not?: Maybe<NestedStringFilter>;
 };
 
+
+/** File Upload Type */
+export enum UploadType {
+  /** Filepath for avatars */
+  Avatar = 'AVATAR',
+  /** Filepath for thumbnails */
+  Thumbnail = 'THUMBNAIL'
+}
 
 export type User = {
   __typename?: 'User';
@@ -426,6 +435,7 @@ export type RegisterMutation = (
 
 export type UploadMutationVariables = Exact<{
   file: Scalars['Upload'];
+  type: UploadType;
 }>;
 
 
@@ -582,8 +592,8 @@ export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const UploadDocument = gql`
-    mutation Upload($file: Upload!) {
-  upload(file: $file)
+    mutation Upload($file: Upload!, $type: UploadType!) {
+  upload(file: $file, type: $type)
 }
     `;
 export type UploadMutationFn = Apollo.MutationFunction<UploadMutation, UploadMutationVariables>;
@@ -602,6 +612,7 @@ export type UploadMutationFn = Apollo.MutationFunction<UploadMutation, UploadMut
  * const [uploadMutation, { data, loading, error }] = useUploadMutation({
  *   variables: {
  *      file: // value for 'file'
+ *      type: // value for 'type'
  *   },
  * });
  */
