@@ -18,8 +18,13 @@ import { Context } from "./interfaces/context";
 import { redis } from "./redis";
 import { createSchema } from "./utils/createSchema";
 
-const main = async () => {
+const driver = async () => {
   const app = express();
+
+  app.get("/", (req, res) => {
+    res.redirect("/graphql");
+  });
+
   const PORT = parseInt(process.env.PORT || "4000");
 
   const RedisStore = connectRedis(session);
@@ -30,6 +35,7 @@ const main = async () => {
       credentials: true,
     })
   );
+
   app.use(
     session({
       name: COOKIE_NAME,
@@ -58,6 +64,8 @@ const main = async () => {
     schema,
     context: ({ req, res }): Context => ({ prisma, req, res, redis }),
     uploads: false,
+    introspection: !__prod__,
+    playground: !__prod__,
     plugins: [
       {
         requestDidStart: () => ({
@@ -93,4 +101,4 @@ const main = async () => {
   });
 };
 
-main().catch(console.error);
+driver().catch(console.error);
