@@ -9,7 +9,7 @@ export class ConfirmUserResolver {
     @Arg("token") token: string,
     @Ctx() ctx: Context
   ): Promise<boolean> {
-    const userId = await redis.get(token);
+    const userId = ctx.req.session.userId;
 
     if (!userId) return false;
 
@@ -19,7 +19,7 @@ export class ConfirmUserResolver {
         confirmed: true,
       },
       where: {
-        id: parseInt(userId),
+        id: userId,
       },
     });
 

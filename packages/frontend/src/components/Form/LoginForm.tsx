@@ -1,9 +1,9 @@
-import { Form, Formik, FormikHelpers } from "formik";
-import { useRouter } from "next/router";
+import {Form, Formik, FormikHelpers} from "formik";
+import {useRouter} from "next/router";
 import React from "react";
-import { MeDocument, MeQuery, useLoginMutation } from "../../generated/graphql";
-import { toErrorMap } from "../../lib/toErrorMap";
-import { Button } from "../Button";
+import {MeDocument, MeQuery, useLoginMutation} from "../../generated/graphql";
+import {toErrorMap} from "../../lib/toErrorMap";
+import {Button} from "../Button";
 import InputField from "./InputField";
 
 interface LoginFormProps {}
@@ -61,7 +61,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
       }}
     >
       {({ isSubmitting, errors, touched }) => (
-        <Form>
+        <Form className="w-full container">
           <InputField
             name="email"
             placeholder="email@provider.tdl"

@@ -14,6 +14,8 @@ export type Scalars = {
   Float: number;
   /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type BoolFilter = {
@@ -63,6 +65,7 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  upload: Scalars['Boolean'];
   create: Post;
   changePassword: User;
   confirm: Scalars['Boolean'];
@@ -70,6 +73,11 @@ export type Mutation = {
   login: User;
   logout: Scalars['Boolean'];
   register: User;
+};
+
+
+export type MutationUploadArgs = {
+  file: Scalars['Upload'];
 };
 
 
@@ -242,6 +250,7 @@ export type StringFilter = {
   not?: Maybe<NestedStringFilter>;
 };
 
+
 export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
@@ -371,6 +380,16 @@ export type RegularUserFragment = (
   & Pick<User, 'id' | 'username'>
 );
 
+export type ConfirmMutationVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type ConfirmMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'confirm'>
+);
+
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
@@ -392,6 +411,29 @@ export type LogoutMutation = (
   & Pick<Mutation, 'logout'>
 );
 
+export type RegisterMutationVariables = Exact<{
+  data: RegisterInput;
+}>;
+
+
+export type RegisterMutation = (
+  { __typename?: 'Mutation' }
+  & { register: (
+    { __typename?: 'User' }
+    & RegularUserFragment
+  ) }
+);
+
+export type UploadMutationVariables = Exact<{
+  file: Scalars['Upload'];
+}>;
+
+
+export type UploadMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'upload'>
+);
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -399,7 +441,7 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & RegularUserFragment
+    & Pick<User, 'id' | 'email' | 'username' | 'displayname' | 'avatar'>
   )> }
 );
 
@@ -409,6 +451,37 @@ export const RegularUserFragmentDoc = gql`
   username
 }
     `;
+export const ConfirmDocument = gql`
+    mutation Confirm($token: String!) {
+  confirm(token: $token)
+}
+    `;
+export type ConfirmMutationFn = Apollo.MutationFunction<ConfirmMutation, ConfirmMutationVariables>;
+
+/**
+ * __useConfirmMutation__
+ *
+ * To run a mutation, you first call `useConfirmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConfirmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [confirmMutation, { data, loading, error }] = useConfirmMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useConfirmMutation(baseOptions?: Apollo.MutationHookOptions<ConfirmMutation, ConfirmMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ConfirmMutation, ConfirmMutationVariables>(ConfirmDocument, options);
+      }
+export type ConfirmMutationHookResult = ReturnType<typeof useConfirmMutation>;
+export type ConfirmMutationResult = Apollo.MutationResult<ConfirmMutation>;
+export type ConfirmMutationOptions = Apollo.BaseMutationOptions<ConfirmMutation, ConfirmMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($data: LoginInput!) {
   login(data: $data) {
@@ -472,13 +545,81 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
-export const MeDocument = gql`
-    query Me {
-  me {
+export const RegisterDocument = gql`
+    mutation Register($data: RegisterInput!) {
+  register(data: $data) {
     ...RegularUser
   }
 }
     ${RegularUserFragmentDoc}`;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+
+/**
+ * __useRegisterMutation__
+ *
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const UploadDocument = gql`
+    mutation Upload($file: Upload!) {
+  upload(file: $file)
+}
+    `;
+export type UploadMutationFn = Apollo.MutationFunction<UploadMutation, UploadMutationVariables>;
+
+/**
+ * __useUploadMutation__
+ *
+ * To run a mutation, you first call `useUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadMutation, { data, loading, error }] = useUploadMutation({
+ *   variables: {
+ *      file: // value for 'file'
+ *   },
+ * });
+ */
+export function useUploadMutation(baseOptions?: Apollo.MutationHookOptions<UploadMutation, UploadMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadMutation, UploadMutationVariables>(UploadDocument, options);
+      }
+export type UploadMutationHookResult = ReturnType<typeof useUploadMutation>;
+export type UploadMutationResult = Apollo.MutationResult<UploadMutation>;
+export type UploadMutationOptions = Apollo.BaseMutationOptions<UploadMutation, UploadMutationVariables>;
+export const MeDocument = gql`
+    query Me {
+  me {
+    id
+    email
+    username
+    displayname
+    avatar
+  }
+}
+    `;
 
 /**
  * __useMeQuery__
