@@ -1,6 +1,7 @@
 import {useApolloClient} from "@apollo/client";
 import {useRouter} from "next/router";
 import React from "react";
+import toast from "react-hot-toast";
 import {Avatar} from "../../components/Avatar";
 import {
   UploadType,
@@ -29,7 +30,11 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ refetch }) => {
     const fileUploaded = event.target.files[0];
     upload({
       variables: { file: fileUploaded, type: UploadType.Avatar },
-    }).then(() => refetch());
+    })
+      .then(() => refetch())
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (

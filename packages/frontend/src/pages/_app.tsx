@@ -1,6 +1,7 @@
-import Head from 'next/head'
-import { AppProps } from 'next/app'
-import '../styles/index.css'
+import {AppProps} from "next/app";
+import Head from "next/head";
+import {Toaster} from "react-hot-toast";
+import "../styles/index.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -9,9 +10,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>NextJS TailwindCSS TypeScript Starter</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <Toaster position="top-center" reverseOrder={false} />
       <Component {...pageProps} />
     </>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;
+

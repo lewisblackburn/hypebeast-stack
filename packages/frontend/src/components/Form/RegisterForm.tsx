@@ -1,6 +1,7 @@
 import {Form, Formik, FormikHelpers} from "formik";
 import {useRouter} from "next/router";
 import React from "react";
+import toast from "react-hot-toast";
 import {
   MeDocument,
   MeQuery,
@@ -63,7 +64,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
             if (e.graphQLErrors[0].extensions.exception.validationErrors)
               setErrors(toErrorMap(e));
             // other error, password: as it is last input box
-            else setErrors({ password: e.message });
+            else toast.error(e.message);
           });
         setSubmitting(false);
       }}

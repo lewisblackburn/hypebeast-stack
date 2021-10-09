@@ -8,6 +8,7 @@ export { PostMaxAggregate } from "./PostMaxAggregate";
 export { PostMinAggregate } from "./PostMinAggregate";
 export { PostSumAggregate } from "./PostSumAggregate";
 export { UserAvgAggregate } from "./UserAvgAggregate";
+export { UserCount } from "./UserCount";
 export { UserCountAggregate } from "./UserCountAggregate";
 export { UserGroupBy } from "./UserGroupBy";
 export { UserMaxAggregate } from "./UserMaxAggregate";

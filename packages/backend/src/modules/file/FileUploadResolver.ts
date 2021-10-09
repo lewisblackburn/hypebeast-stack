@@ -1,7 +1,16 @@
 import fs, { createWriteStream } from "fs";
 import { FileUpload, GraphQLUpload } from "graphql-upload";
-import { Arg, Ctx, Mutation, registerEnumType, Resolver } from "type-graphql";
+import {
+  Arg,
+  Authorized,
+  Ctx,
+  Mutation,
+  registerEnumType,
+  Resolver,
+  UseMiddleware,
+} from "type-graphql";
 import { Context } from "../../interfaces/context";
+import { ErrorInterceptor } from "../middleware/ErrorInterceptor";
 
 enum UploadType {
   AVATAR = "AVATAR",
@@ -23,6 +32,8 @@ registerEnumType(UploadType, {
 
 @Resolver()
 export class FileUploadResolver {
+  @Authorized(["USER", "ADMIN"])
+  @UseMiddleware(ErrorInterceptor)
   @Mutation(() => Boolean)
   async upload(
     @Ctx() ctx: Context,
@@ -33,7 +44,7 @@ export class FileUploadResolver {
     const filepath = `${__dirname}/../../../images`;
 
     const folder = {
-      [UploadType.AVATAR]: filepath + ctx.req.session.userId,
+      [UploadType.AVATAR]: `${filepath}/${ctx.req.session.userId}`,
       [UploadType.THUMBNAIL]: `${filepath}/thumbnail`,
     };
 

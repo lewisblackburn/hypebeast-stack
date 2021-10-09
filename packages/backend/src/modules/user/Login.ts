@@ -1,5 +1,5 @@
 import argon2 from "argon2";
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { User } from "../../generated/type-graphql";
 import { Context } from "../../interfaces/context";
 import { LoginInput } from "./login/LoginInput";
@@ -20,8 +20,6 @@ export class LoginResolver {
     // might need to change how i deal with errors
 
     if (!user) throw new Error("That user does not exist.");
-    if (!user.confirmed)
-      throw new Error("You need to confirm your account before logging in.");
     const valid = await argon2.verify(user!.password, data.password);
     if (!valid) throw new Error("Incorrect password");
 

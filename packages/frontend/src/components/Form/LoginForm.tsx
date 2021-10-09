@@ -1,6 +1,7 @@
 import {Form, Formik, FormikHelpers} from "formik";
 import {useRouter} from "next/router";
 import React from "react";
+import toast from "react-hot-toast";
 import {MeDocument, MeQuery, useLoginMutation} from "../../generated/graphql";
 import {toErrorMap} from "../../lib/toErrorMap";
 import {Button} from "../Button";
@@ -51,11 +52,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
             }
           })
           .catch((e: any) => {
-            // if graphql error
+            // if graphql validation error
             if (e.graphQLErrors[0].extensions.exception.validationErrors)
               setErrors(toErrorMap(e));
-            // other error, password: as it is last input box
-            else setErrors({ password: e.message });
+            // else toast other errors
+            else toast.error(e.message);
           });
         setSubmitting(false);
       }}
