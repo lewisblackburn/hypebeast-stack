@@ -8,13 +8,13 @@ To run:
 yarn watch
 ```
 
-React
-TypeScript
-GraphQL
-Apollo
-Node.js
-PostgreSQL
-PrismaORM
-Redis
-Next.js
-TypeGraphQL
+- React
+- TypeScript
+- GraphQL
+- Apollo
+- Node.js
+- PostgreSQL
+- PrismaORM
+- Redis
+- Next.js
+- TypeGraphQL
