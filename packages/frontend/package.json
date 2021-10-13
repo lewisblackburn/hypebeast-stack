@@ -1,7 +1,6 @@
 {
   "name": "@project/frontend",
   "version": "0.0.2",
-  "private": true,
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "3.4.0-rc.23",
