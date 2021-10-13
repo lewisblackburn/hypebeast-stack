@@ -1,13 +1,8 @@
 {
   "name": "@project/frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "watch": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "gen": "graphql-codegen --config codegen.yml"
-  },
+  "license": "MIT",
   "dependencies": {
     "@apollo/client": "3.4.0-rc.23",
     "apollo-upload-client": "16.0.0",
@@ -34,5 +29,11 @@
     "postcss-import": "^14.0.2",
     "tailwindcss": "^2.1.4",
     "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "watch": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "gen": "graphql-codegen --config codegen.yml"
   }
 }

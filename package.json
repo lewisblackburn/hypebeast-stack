@@ -31,8 +31,8 @@
     "node": "16.10.0"
   },
   "scripts": {
-    "clean": "npm run clean:node_modules",
-    "clean:node_modules": "rimraf ./node_modules **/{dist,node_modules}/",
+    "clean": "lerna clean",
+    "new-version": "lerna version",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "watch": "lerna run watch --parallel",
