@@ -32,7 +32,7 @@
   },
   "scripts": {
     "clean": "lerna clean",
-    "new-version": "lerna version",
+    "new-version": "lerna version --conventional-commits --yes",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --preview-feature",
     "watch": "lerna run watch --parallel",
